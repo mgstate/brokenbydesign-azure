@@ -12,12 +12,12 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "vulnerable" {
-  name     = "SuperCompany"
+  name     = "holidayhangover"
   location = var.default_location
 }
 
 resource "azurerm_storage_account" "vuln_storage_account" {
-  name                     = "supercompanystorage"
+  name                     = "holidayhangover"
   resource_group_name      = azurerm_resource_group.vulnerable.name
   location                 = var.default_location
   account_tier             = "Standard"
@@ -31,11 +31,11 @@ resource "azurerm_storage_container" "vuln_storage_container" {
 }
 
 resource "azurerm_storage_blob" "website_logo" {
-  name                   = "logo.png"
+  name                   = "holidayhangover.jpg"
   storage_account_name   = azurerm_storage_account.vuln_storage_account.name
   storage_container_name = azurerm_storage_container.vuln_storage_container.name
   type                   = "Block"
-  source                 = "files/logo.png"
+  source                 = "holidayhangover/holidayhangover.jpg"
 }
 
 resource "azuread_application" "vuln_application" {
@@ -74,7 +74,7 @@ resource "azuread_application_certificate" "vuln_application_cert" {
 }
 
 resource "azurerm_storage_blob" "private_key" {
-  name                   = "SECURA{C3RT1F1C3T3}.pem"
+  name                   = "holidayhangover{C3RT1F1C3T3}.pem"
   storage_account_name   = azurerm_storage_account.vuln_storage_account.name
   storage_container_name = azurerm_storage_container.vuln_storage_container.name
   type                   = "Block"
@@ -132,7 +132,7 @@ resource "azurerm_resource_group" "db" {
 }
 
 resource "azurerm_storage_account" "db" {
-  name                     = "securadbstorageacc"
+  name                     = "holidayhangoverdbstorageacc"
   resource_group_name      = azurerm_resource_group.db.name
   location                 = azurerm_resource_group.db.location
   account_tier             = "Standard"
@@ -150,7 +150,7 @@ resource "random_password" "password" {
 }
 
 resource "azurerm_mssql_server" "db" {
-  name                         = "securavulnerableserver"
+  name                         = "holidayhangovervulnerableserver"
   resource_group_name          = azurerm_resource_group.db.name
   location                     = azurerm_resource_group.db.location
   version                      = "12.0"
@@ -178,7 +178,7 @@ resource "azurerm_mssql_database" "db" {
     azurerm_mssql_firewall_rule.db # We need the firewall rule to be applied otherwise we cannot execute the sqlcmd's from the local machine
   ]
 
-  name         = "securavulnerabledb"
+  name         = "holidayhangovervulnerabledb"
   server_id    = azurerm_mssql_server.db.id
   collation    = "SQL_Latin1_General_CP1_CI_AS"
   license_type = "LicenseIncluded"
@@ -186,7 +186,7 @@ resource "azurerm_mssql_database" "db" {
   sku_name     = "Basic"
 
   provisioner "local-exec" {
-    command = "sleep 60;sqlcmd -S securavulnerableserver.database.windows.net -U Th1sUs3rn4m3!sUnh4ck4bl3 -P '${random_password.password.result}' -d master -i files/sql_create_user.sql; sqlcmd -S securavulnerableserver.database.windows.net -U Th1sUs3rn4m3!sUnh4ck4bl3 -P '${random_password.password.result}' -d securavulnerabledb -i files/sql_setup.sql"
+    command = "sleep 60;sqlcmd -S holidayhangovervulnerableserver.database.windows.net -U Th1sUs3rn4m3!sUnh4ck4bl3 -P '${random_password.password.result}' -d master -i files/sql_create_user.sql; sqlcmd -S holidayhangovervulnerableserver.database.windows.net -U Th1sUs3rn4m3!sUnh4ck4bl3 -P '${random_password.password.result}' -d securavulnerabledb -i files/sql_setup.sql"
   }
 
   timeouts {
@@ -201,14 +201,14 @@ resource "azurerm_mssql_database" "db" {
 resource "azuread_user" "vuln_devops_user" {
   user_principal_name         = "devops@secvulnapp.onmicrosoft.com"
   display_name                = "DevOps"
-  password                    = "SECURA{D4F4ULT_P4SSW0RD}"
+  password                    = "holidayhangover{D4F4ULT_P4SSW0RD}"
   disable_password_expiration = true
   disable_strong_password     = true
   office_location             = "Password temp changed to SECURA{D4F4ULT_P4SSW0RD}"
 }
 
 resource "azurerm_resource_group" "vpn_network" {
-  name     = "azure-vpn-rg-secura"
+  name     = "azure-vpn-rg-holidayhangover"
   location = var.default_location
 }
 

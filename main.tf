@@ -35,7 +35,7 @@ resource "azurerm_storage_blob" "website_logo" {
   storage_account_name   = azurerm_storage_account.vuln_storage_account.name
   storage_container_name = azurerm_storage_container.vuln_storage_container.name
   type                   = "Block"
-  source                 = "holidayhangover/holidayhangover.jpg"
+  source                 = "files/holidayhangover.jpg"
 }
 
 resource "azuread_application" "vuln_application" {

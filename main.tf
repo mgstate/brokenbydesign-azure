@@ -427,6 +427,6 @@ resource "azurerm_virtual_machine_extension" "setupwebsite" {
   type_handler_version = "2.0"
 
   settings = jsonencode({
-    commandToExecute = "sudo apt-get update -y && sudo apt-get install nginx -y && sudo echo \"<h1>SECURA{1NT3RN4L_HTML_W3BP4G3}</h1>\" > /var/www/html/index.html"
+    commandToExecute = "sudo apt-get update -y && sudo apt-get install nginx -y && sudo echo \"<h1>holidayhangover{1NT3RN4L_HTML_W3BP4G3}</h1>\" > /var/www/html/index.html"
   })
 }
